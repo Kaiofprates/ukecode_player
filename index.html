@@ -15,6 +15,7 @@
         <v-container>
         <p>
           <v-divider></v-divider>
+         
         Setlist --- in play = {{inplay}} 
           <v-divider></v-divider>
         </p>
@@ -25,6 +26,21 @@
     <li>
         <v-spacer />
          <audio controls>
+         {% comment %}
+         
+         aqui eu estou setando manualmente a música, isso porque estou usando esse player
+         convencional, quero colocar aqui um player que receba a lista que vem do vue 
+
+         A estrutura do codigo é a seguinte:
+
+         * temos um for com o array musics
+         * esse array vem pelo axios e é criado toda vez que o programa se inicia pelo preload.js
+         * há um icone não rederizado no footer, devo mudar os icones para fontawsome, deveria ser um coração
+         * Estou usando o Vuetify para o design
+         
+
+
+         {% endcomment %}
   <source src="./music/03 - Eu Sou A Maré Viva.mp3" type="audio/mp3">
    </audio>
         </v-container>
@@ -41,21 +57,28 @@
   <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
   <script>
 
-  
+//------ Aqui está o "inverno das calbacks" -------
+//  eu poderia ter usado promises? (sim / com certeza)
+//   eu vou usar? (não / claro que não)
+//  ------------------
+// em suma: chamamos o Axios para retornar o json com a lista das músicas no diretório
 
 axios.get('./list.json')
   .then(function (response) {
-    // handle success
-    console.log('foi')
+
+// dentro do axios eu instancio o  Vue 
+// --------------- Aqui inicia o Vue ----------------
+
      let vm = new Vue({ el: '#app' ,
      data () {
       return {
         dialog: false,
-        musics: response.data.music,
+        musics: response.data.music, //response.data.music é a resposta do json 
         inplay: "",
       }
       },
     methods: {
+    //------- Essa função é a responsavel pelo evento de click em cada item da lista
     show: function (item) {
       alert(item)
       this.inplay = "./music/",
@@ -63,6 +86,8 @@ axios.get('./list.json')
     }
   }
     });
+
+// ----------- Aqui acaba o Vue ------------------
 
     console.log("json do index " + response.data.music);
   })

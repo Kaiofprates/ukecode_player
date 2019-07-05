@@ -1,4 +1,7 @@
 // Modules to control application life and create native browser window
+
+// ----------------------  AQUI ESTÁ TODA A CONFIGURAÇÃO DA JANELA DO ELECTRON ----------------------
+
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 
