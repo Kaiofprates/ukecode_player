@@ -1,0 +1,84 @@
+  
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="./renderer.js"></script>
+</head>
+<body>
+  <div id="app">
+    <v-app dark>
+      <v-content>
+        <v-container>
+        <p>
+          <v-divider></v-divider>
+        Setlist --- in play = {{inplay}} 
+          <v-divider></v-divider>
+        </p>
+         <li v-for="item in musics" v-on:click="show(item)">
+    {{item}}
+              <v-divider></v-divider>
+
+    <li>
+        <v-spacer />
+         <audio controls>
+  <source src="./music/03 - Eu Sou A Maré Viva.mp3" type="audio/mp3">
+   </audio>
+        </v-container>
+      <v-divider></v-divider>
+        <v-footer>
+    <v-spacer></v-spacer>
+    <div>created with  for UkeCode <v-icon color="tertiary" size="17"> mdi-heart </v-icon> &copy; {{ new Date().getFullYear() }}</div>
+  </v-footer>
+      </v-content>
+    </v-app>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+  <script>
+
+  
+
+axios.get('./list.json')
+  .then(function (response) {
+    // handle success
+    console.log('foi')
+     let vm = new Vue({ el: '#app' ,
+     data () {
+      return {
+        dialog: false,
+        musics: response.data.music,
+        inplay: "",
+      }
+      },
+    methods: {
+    show: function (item) {
+      alert(item)
+      this.inplay = "./music/",
+      this.inplay = this.inplay + item;     
+    }
+  }
+    });
+
+    console.log("json do index " + response.data.music);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .finally(function () {
+    // always executed
+  })
+
+
+
+
+
+
+  </script>
+</body>
+</html>
